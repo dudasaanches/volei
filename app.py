@@ -16,7 +16,6 @@ volleyball_players = []
 
 
 @app.route('/')
-
 def volei():  # put application's code here
     return render_template("volei.html", Titulo = "Jogadores de volêi", ListaJogadores = volleyball_players)
 
@@ -35,6 +34,34 @@ def criar():
     horario = request.form['horario']
     obj = cadvolei(nome,idade,posicao,nivel,cidade,dia,horario)
     volleyball_players.append(obj)
+    return redirect('/')
+
+@app.route('/excluir/<nome>', methods=['GET','DELETE'])
+def excluir(nome):
+    for i, joga in enumerate(volleyball_players):
+        if joga.nome == nome:
+            volleyball_players.pop(i)
+            break
+    return redirect('/')
+
+@app.route('/editar/<nome>', methods=['GET'])
+def editar(nome):
+    for i, joga in enumerate(volleyball_players):
+        if joga.nome == nome:
+            return render_template("editar.html", volei=joga, Titulo="Alterar Jogador")
+
+@app.route('/alterar', methods=['POST','PUT'])
+def alterar():
+    nome = request.form['nome']
+    for i, joga in enumerate(volleyball_players):
+        if joga.nome == nome:
+            joga.nome = request.form['nome']
+            joga.idade = request.form['idade']
+            joga.posicao = request.form['posicao']
+            joga.nivel = request.form['nivel']
+            joga.cidade = request.form['cidade']
+            joga.dia = request.form['dia']
+            joga.horario = request.form['horario']
     return redirect('/')
 
 if __name__ == '__main__':

@@ -21,6 +21,9 @@
                 <p>Cidade/estado: {{ volei.cidade }}</p>
                 <p>Dia: {{ volei.dia }}</p>
                 <p>Horário: {{ volei.horario }}</p>
+                <br>
+                <a href="excluir/{{ volei.nome }}">Excluir</a>
+                <a href="editar/{{ volei.nome }}">Editar</a>
             </div>
             {% endfor %}
         </div>
